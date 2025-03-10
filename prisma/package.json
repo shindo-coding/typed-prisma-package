@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sonlam806/typed-prisma-package.git",
+    "url": "https://github.com/shindo-coding/typed-prisma-package.git",
     "directory": "prisma"
   },
   "dependencies": {
