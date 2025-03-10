@@ -5,16 +5,9 @@ This repository is an example on how to manage your prisma setup from a central 
 ## Structure
 
 - The `prisma/` directory contains everything prisma related (e.g. schema, migrations) and also the code to bundle the typed prisma package in your own
-- The `next/` directory is a basic webapp to showcase how it works on the other side when you use the package, in your case this does NOT need to be in the same repository!
 - The `.github/workflows/` directory contains an example GitHub Actions file on how to publish the package to a npm registry
 
 ## Manual setup
-
-Start the database in background via docker
-
-```bash
-$ docker-compose up -d postgres
-```
 
 Switch to the prisma directory
 
@@ -43,34 +36,6 @@ But first we need to make sure all migrations are deployed against the local dat
 ```bash
 prisma migrate deploy
 ```
-
-Now we can move the generated package over in the example Next.js app
-
-```bash
-mv marcmogdanz-typed-prisma-package-1.0.0.tgz ../next
-```
-
-And switch over to the directory
-
-```bash
-cd ../next
-```
-
-Now we can simply install the package
-
-```bash
-npm i marcmogdanz-typed-prisma-package-1.0.0.tgz
-```
-
-And run the Next.js app
-
-```bash
-npm run dev
-```
-
-Now you can head to [http://localhost:3000](http://localhost:3000), create an example user and see all existing users. Check out the routes in the `next/pages/api` directory to see the typed prisma package in action.
-
-![](next-screenshot.png)
 
 # CI via GitHub Actions
 
