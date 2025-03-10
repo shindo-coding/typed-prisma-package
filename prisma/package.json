@@ -1,5 +1,5 @@
 {
-  "name": "typed-prisma-package",
+  "name": "@sonlam806/typed-prisma-package",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -9,7 +9,7 @@
     "prepare": "npx prisma generate && tsc && cp src/index.d.ts dist/index.d.ts"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@sonlam806"
+    "registry": "https://npm.pkg.github.com"
   },
   "repository": {
     "type": "git",

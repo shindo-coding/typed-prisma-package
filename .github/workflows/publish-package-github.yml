@@ -13,6 +13,9 @@ defaults:
 jobs:
   package:
     runs-on: self-hosted
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout
@@ -25,12 +28,13 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-            ${{ runner.os }}-
 
       - name: Setup Node.js 22.x
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
+          registry-url: https://npm.pkg.github.com/
+          scope: "@sonlam806"
 
       - name: Install dependencies
         run: npm ci
@@ -38,17 +42,7 @@ jobs:
       - name: Generate Client
         run: npx prisma generate
 
-      - name: Pack the package
-        run: npm pack
-
-      # setup again with the github npm registry
-      - name: Setup Node.js 22.x (GitHub npm registry)
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.x
-          registry-url: https://npm.pkg.github.com/
-          scope: "@sonlam806"
-
-      - run: npm publish
+      - name: Publish to GitHub Packages
+        run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
