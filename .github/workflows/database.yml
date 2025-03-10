@@ -47,7 +47,7 @@ jobs:
         with:
           node-version: 22.x
           registry-url: https://npm.pkg.github.com/
-          scope: "@sonlam806"
+          scope: "@shindo-coding"
 
       - run: npm publish
         env:
