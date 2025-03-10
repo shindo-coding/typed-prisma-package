@@ -8,6 +8,9 @@
   "scripts": {
     "prepare": "npx prisma generate && tsc && cp src/index.d.ts dist/index.d.ts"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@shindo-coding"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/shindo-coding/typed-prisma-package.git",
