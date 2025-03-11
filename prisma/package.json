@@ -1,21 +1,16 @@
 {
-  "name": "@sonlam806/typed-prisma-package",
+  "name": "@shindo-coding/typed-prisma-package",
   "version": "1.0.0",
-  "description": "",
+  "description": "A typed Prisma package for private microservices",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "Shindo Hikaru",
   "scripts": {
     "prepare": "npx prisma generate && tsc && cp src/index.d.ts dist/index.d.ts"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "public"
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/shindo-coding/typed-prisma-package.git",
-    "directory": "prisma"
+    "url": "https://github.com/shindo-coding/typed-prisma-package.git"
   },
   "dependencies": {
     "@prisma/client": "^5.19.1"
