@@ -2,6 +2,8 @@
 
 This repository is an example on how to manage your prisma setup from a central place and export a package which wraps the "normal" Prisma but include your specific typings. It is useful for e.g. a microservice setup in which every service can import the package and you can manage/publish the prisma package from a dedicated place/repository.
 
+This repository also build a Docker image that can be used to run database migrations in a Kubernetes environment.
+
 ## Structure
 
 - The `prisma/` directory contains everything prisma related (e.g. schema, migrations) and also the code to bundle the typed prisma package in your own

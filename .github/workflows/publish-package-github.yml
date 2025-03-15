@@ -22,7 +22,7 @@ jobs:
           echo "Current package version: $PACKAGE_VERSION"
 
           # Check if package exists on GitHub Packages
-          NPM_VERSION=$(npm view @shindo-coding/$(node -p "require('./package.json').name") version --registry https://npm.pkg.github.com/ 2>/dev/null || echo "not_published")
+          NPM_VERSION=$(npm view @shindo-coding/typed-prisma-package version --registry https://npm.pkg.github.com/ 2>/dev/null || echo "not_published")
           echo "Published version: $NPM_VERSION"
 
           # Skip if versions match
