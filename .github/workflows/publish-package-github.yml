@@ -18,11 +18,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Version checking
+
+      - name: Setup Node.js 22.x
+        uses: actions/setup-node@v4
         with:
           node-version: 22.x
           registry-url: 'https://npm.pkg.github.com'
           scope: '@shindo-coding'
+
+      - name: Version checking
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -42,14 +46,6 @@ jobs:
             echo "Version $PACKAGE_VERSION is not published yet. Proceeding with publish."
             echo "SKIP_PUBLISH=false" >> $GITHUB_ENV
           fi
-
-      - name: Setup Node.js 22.x
-        if: env.SKIP_PUBLISH != 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.x
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@shindo-coding'
 
       - name: Install dependencies
         if: env.SKIP_PUBLISH != 'true'
