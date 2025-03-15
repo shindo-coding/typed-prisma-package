@@ -6,7 +6,7 @@ ENV TZ="Asia/Ho_Chi_Minh"
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci
+RUN npm i
 COPY . .
 
 
@@ -23,7 +23,7 @@ RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nodejs -u 1001
 
 COPY --from=build /app/package*.json ./
-RUN npm ci --only=production
+RUN npm i
 
 COPY --chown=nodejs:nodejs --from=build /app/prisma /app/prisma
 
