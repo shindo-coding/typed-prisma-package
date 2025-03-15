@@ -1,0 +1,59 @@
+name: Publish package to GitHub Packages
+
+on:
+  push:
+    branches:
+      - main
+  pull_request: {}
+
+jobs:
+  package:
+    runs-on: self-hosted
+    permissions:
+      contents: read
+      packages: write
+      id-token: write  # Required for OIDC token exchange
+
+    steps:
+      - name: Version checking
+        run: |
+          # Get version from package.json
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          echo "Current package version: $PACKAGE_VERSION"
+
+          # Check if package exists on GitHub Packages
+          NPM_VERSION=$(npm view @shindo-coding/$(node -p "require('./package.json').name") version --registry https://npm.pkg.github.com/ 2>/dev/null || echo "not_published")
+          echo "Published version: $NPM_VERSION"
+
+          # Skip if versions match
+          if [ "$NPM_VERSION" = "$PACKAGE_VERSION" ]; then
+            echo "Version $PACKAGE_VERSION is already published. Skipping."
+            echo "SKIP_PUBLISH=true" >> $GITHUB_ENV
+          else
+            echo "Version $PACKAGE_VERSION is not published yet. Proceeding with publish."
+            echo "SKIP_PUBLISH=false" >> $GITHUB_ENV
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22.x
+        if: env.SKIP_PUBLISH != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@shindo-coding'
+
+      - name: Install dependencies
+        if: env.SKIP_PUBLISH != 'true'
+        run: npm ci
+
+      # - name: Generate Client
+      #   run: npx prisma generate
+
+      - name: Publish to GitHub Packages
+        if: env.SKIP_PUBLISH != 'true'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
