@@ -9,6 +9,8 @@ jobs:
       contents: read
       packages: write
       id-token: write  # Required for OIDC token exchange
+    outputs:
+      skip_publish: ${{ steps.version_check.outputs.skip_publish }}
 
     steps:
       - name: Checkout
@@ -44,7 +46,8 @@ jobs:
           fi
 
   create_release_id:
-    if: env.SKIP_PUBLISH != 'true'
+    needs: [check]
+    if: needs.check.outputs.skip_publish != 'true'
     runs-on: self-hosted
     timeout-minutes: 20
     env:
@@ -64,9 +67,9 @@ jobs:
           echo "DOCKER_TAG=${DOCKER_TAG}" >> ${GITHUB_OUTPUT}
 
   package_docker:
-    if: env.SKIP_PUBLISH != 'true'
     runs-on: self-hosted
-    needs: ["create_release_id"]
+    needs: [check, create_release_id]
+    if: needs.check.outputs.skip_publish != 'true'
     env:
       CI_REGISTRY_IMAGE: shindo806/database-migrator
       PROJECT_NAME: database-migrator
@@ -89,9 +92,9 @@ jobs:
           docker push $CI_REGISTRY_IMAGE:$DOCKER_TAG
 
   deploy:
-    if: env.SKIP_PUBLISH != 'true'
     runs-on: self-hosted
-    needs: ["package_docker"]
+    needs: [check, package_docker]
+    if: needs.check.outputs.skip_publish != 'true'
 
     env:
       CI_REGISTRY_IMAGE: shindo806/database-migrator
