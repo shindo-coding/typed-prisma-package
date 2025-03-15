@@ -16,7 +16,8 @@ jobs:
 
     steps:
       - name: Version checking
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Get version from package.json
           PACKAGE_VERSION=$(node -p "require('./package.json').version")
