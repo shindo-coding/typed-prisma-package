@@ -86,14 +86,14 @@ jobs:
         env:
           DOCKER_TAG: ${{ steps.fetch-latest-tag.outputs.DOCKER_TAG }}
         run: |
-          envsubst < template.yml > deployment.yml
+          envsubst < template.yaml > deployment.yaml
         shell: bash
 
       - name: Deploy to Kubernetes
         env:
           DOCKER_TAG: ${{ steps.fetch-latest-tag.outputs.DOCKER_TAG }}
         run: |
-          cat deployment.yml
-          minikube kubectl -- apply -f deployment.yml
+          cat deployment.yaml
+          minikube kubectl -- apply -f deployment.yaml
           minikube kubectl -- rollout status deploy/$PROJECT_NAME
         shell: bash
