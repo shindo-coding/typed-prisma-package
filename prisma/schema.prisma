@@ -163,7 +163,8 @@ model TickerSuggestion {
   id Int @id @default(autoincrement())
   code String
   userId String
-  postId String?
+  postId String
+  postType String
   createdAt  DateTime   @default(now())
   isNotificationSent Boolean @default(false)
 
