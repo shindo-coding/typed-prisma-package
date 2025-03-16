@@ -153,21 +153,35 @@ model DatabricksHistoricalData {
   reasons String?
   riskLevel String
 }
+
 model Investor {
   id Int @id @default(autoincrement())
   userId String @unique
   userName String
   createdAt  DateTime   @default(now())
+
+  // Add relation to TickerSuggestion
+  tickerSuggestions TickerSuggestion[]
 }
 
+
 model TickerSuggestion {
-  id Int @id @default(autoincrement())
-  code String
-  userId String
-  postId String
-  postType String
-  createdAt  DateTime   @default(now())
-  isNotificationSent Boolean @default(false)
+  id                 Int      @id @default(autoincrement())
+  code               String
+  userId             String
+  postId             String
+  postType           String
+  createdAt          DateTime @default(now())
+  isNotificationSent Boolean  @default(false)
+
+  // Add relation to Investor
+  investor           Investor @relation(fields: [userId], references: [userId])
 
   @@index(fields: [code, userId])
+}
+
+model TestTable {
+  id Int @id @default(autoincrement())
+  code String
+  createdAt  DateTime   @default(now())
 }
