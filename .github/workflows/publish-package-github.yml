@@ -23,19 +23,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@shindo-coding'
 
       - name: Version checking
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
         run: |
           # Get version from package.json
           PACKAGE_VERSION=$(node -p "require('./package.json').version")
           echo "Current package version: $PACKAGE_VERSION"
 
           # Check if package exists on GitHub Packages
-          NPM_VERSION=$(npm view @shindo-coding/typed-prisma-package version --registry https://npm.pkg.github.com/ 2>/dev/null || echo "not_published")
+          NPM_VERSION=$(npm view shindo-coding-typed-prisma-package version  2>/dev/null || echo "not_published")
           echo "Published version: $NPM_VERSION"
 
           # Skip if versions match
@@ -58,4 +56,4 @@ jobs:
         if: env.SKIP_PUBLISH != 'true'
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}

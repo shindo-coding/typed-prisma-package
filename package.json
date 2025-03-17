@@ -1,5 +1,5 @@
 {
-  "name": "@shindo-coding/typed-prisma-package",
+  "name": "shindo-coding-typed-prisma-package",
   "version": "3.1.0",
   "description": "A typed Prisma package for private microservices",
   "main": "index.js",
