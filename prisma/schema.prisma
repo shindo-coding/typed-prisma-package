@@ -148,6 +148,7 @@ model HistoricalData {
   sellQuantity BigInt
 
   @@index(fields: [symbol])
+  @@unique([date, symbol])
 }
 
 model DatabricksHistoricalData {
