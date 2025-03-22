@@ -186,9 +186,3 @@ model TickerSuggestion {
 
   @@index(fields: [code, userId])
 }
-
-model TestTable {
-  id Int @id @default(autoincrement())
-  code String
-  createdAt  DateTime   @default(now())
-}
