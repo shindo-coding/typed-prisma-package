@@ -185,4 +185,5 @@ model TickerSuggestion {
   investor           Investor @relation(fields: [userId], references: [userId])
 
   @@index(fields: [code, userId])
+  @@unique([userId, code, postId])
 }

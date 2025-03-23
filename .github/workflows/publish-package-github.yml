@@ -26,7 +26,7 @@ jobs:
 
       - name: Version checking
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+          NPM_CI_TOKEN: ${{ secrets.NPM_CI_TOKEN }}
         run: |
           # Get version from package.json
           PACKAGE_VERSION=$(node -p "require('./package.json').version")
@@ -49,11 +49,8 @@ jobs:
         if: env.SKIP_PUBLISH != 'true'
         run: npm ci
 
-      # - name: Generate Client
-      #   run: npx prisma generate
-
       - name: Publish to GitHub Packages
         if: env.SKIP_PUBLISH != 'true'
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+          NPM_CI_TOKEN: ${{ secrets.NPM_CI_TOKEN }}
